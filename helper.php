@@ -636,26 +636,44 @@ class helper_plugin_pagelist extends DokuWiki_Plugin
      */
     protected function printPageCell($id)
     {
+        $external = False;
+
+        if(preg_match("/\b(?:https?:\/\/|www\.)\S+\b/i", $id)) {
+            $external = True;
+        }
+
+        // check for page existence if internal page
+        if (!$external) {
+            // handle image and text titles
+            if (!empty($this->page['titleimage'])) {
+                $title = '<img src="' . ml($this->page['titleimage']) . '" class="media"';
+                if (!empty($this->page['title'])) {
+                    $title .= ' title="' . hsc($this->page['title']) . '" alt="' . hsc($this->page['title']) . '"';
+                }
+                $title .= ' />';
+            } else {
+                $title = hsc($this->page['title']);
+            }
+        } else {
+            $this->page['exists'] = true;
+        }
+
         if ($this->page['exists']) {
             $class = 'wikilink1';
         } else {
             $class = 'wikilink2';
         }
 
-        // handle image and text titles
-        if (!empty($this->page['titleimage'])) {
-            $title = '<img src="' . ml($this->page['titleimage']) . '" class="media"';
-            if (!empty($this->page['title'])) {
-                $title .= ' title="' . hsc($this->page['title']) . '" alt="' . hsc($this->page['title']) . '"';
-            }
-            $title .= ' />';
+        // produce output
+        if (!$external) {
+            // produce output
+            $section = !empty($this->page['section']) ? '#' . $this->page['section'] : '';
+            $content = '<a href="' . wl($id) . $section . '" class="' . $class . '" title="' . $id . '"  data-wiki-id="' . $id . '">' . $title . '</a>';
         } else {
-            $title = hsc($this->page['title']);
+            $content = '<a href="'.$id.
+                '" class="'.$class.'" title="'.$id.'">'.$this->page['title'].'</a>';
         }
 
-        // produce output
-        $section = !empty($this->page['section']) ? '#' . $this->page['section'] : '';
-        $content = '<a href="' . wl($id) . $section . '" class="' . $class . '" title="' . $id . '"  data-wiki-id="' . $id . '">' . $title . '</a>';
         if ($this->style == 'list') {
             $content = '<ul><li>' . $content . '</li></ul>';
         }

@@ -61,14 +61,18 @@ class syntax_plugin_pagelist extends DokuWiki_Syntax_Plugin
             list($id, $section) = array_pad(explode('#', $id, 2), 2, null);
             if (!$id) $id = $ID;
 
+            $external = False;
+
             // Igor and later
-            if (class_exists('dokuwiki\File\PageResolver')) {
-                $resolver = new dokuwiki\File\PageResolver($ID);
-                $id = $resolver->resolveId($id);
-                $exists = page_exists($id);
-            } else {
-                // Compatibility with older releases
-                resolve_pageid(getNS($ID), $id, $exists);
+            if(!preg_match("/\b(?:https?:\/\/|www\.)\S+\b/i", $id)) {
+                if (class_exists('dokuwiki\File\PageResolver')) {
+                    $resolver = new dokuwiki\File\PageResolver($ID);
+                    $id = $resolver->resolveId($id);
+                    $exists = page_exists($id);
+                } else {
+                    // Compatibility with older releases
+                    resolve_pageid(getNS($ID), $id, $exists);
+                }
             }
 
             // page has an image title
