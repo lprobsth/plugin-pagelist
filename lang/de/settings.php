@@ -33,3 +33,4 @@ $lang['showimage']             = 'Bild anzeigen (Pageimage Plugin wird benötigt
 $lang['showdiff']              = 'Link auf Diff-Seite anzeigen';
 $lang['sort']                  = 'Seiten alphabetisch nach Namen sortieren';
 $lang['rsort']                 = 'Seiten in umgekehrter alphabetischer Reihenfolge nach Namen sortieren';
+$lang['allowhtml']             = 'Erlaube HTML code in der Spalte "Beschreibung" (eventuell unsicher)';

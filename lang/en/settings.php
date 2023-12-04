@@ -37,3 +37,4 @@ $lang['showdiff']         = 'show link to the diff page';
 $lang['sort']             = 'sort pages by pagename';
 $lang['rsort']            = 'reverse sort pages by pagename';
 $lang['sortby']           = 'sort the page by the given item e.g. <code>id</code>, <code>pagename</code>, <code>ns</code>, <code>title</code>, <code>date</code>, <code>desc</code>, <code>user</code> etc or columns from plugins';
+$lang['allowhtml']        = 'enable rendering of HTML code in \'description\' column (might be insecure)';

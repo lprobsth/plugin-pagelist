@@ -717,7 +717,11 @@ class helper_plugin_pagelist extends DokuWiki_Plugin
         if ($max > 1 && PhpString::strlen($desc) > $max) {
             $desc = PhpString::substr($desc, 0, $max) . '…';
         }
-        return $this->printCell('desc', hsc($desc));
+        if($this->getConf('allowhtml')) {
+            return $this->printCell('desc', $desc);
+        } else {
+            return $this->printCell('desc', hsc($desc));
+        }
     }
 
     /**
